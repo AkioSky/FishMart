@@ -1,0 +1,66 @@
+{% load i18n %}
+{% load static %}
+{% load taxed_prices %}
+{% load price from taxed_prices %}
+{% load get_product_image_thumbnail from product_images %}
+{% load placeholder %}
+
+{% for product, availability in products %}
+  <div class="col-6 col-lg-4 product-list">
+    <div class="card a-shadow-12 a-shadow-hover-16 a-transition a-os-animation a-mb-3 text-center"
+         data-os-animation="fadeIn" data-os-animation-delay=".3s">
+      <div class="text-center">
+        <div>
+          <div class="product-image">
+            <a href="{{ product.get_absolute_url }}" class="link--clean card-img-container item-image">
+              <img class="img-responsive lazyload lazypreload card-img-top"
+                   data-src="{% get_product_image_thumbnail product.get_first_image method="thumbnail" size=255 %}"
+                   data-srcset="{% get_product_image_thumbnail product.get_first_image method="thumbnail" size=255 %} 1x, {% get_product_image_thumbnail product.get_first_image method="thumbnail" size=510 %} 2x"
+                   alt=""
+                   src="{% placeholder size=255 %}">
+            </a>
+            <div style="display: none">
+              {% if availability.available %}
+                {% if availability.on_sale %}
+                  {% if availability.price_range_undiscounted.start != availability.price_range.start %}
+                    <h5 class="card-img-overlay card-img-overlay-mini card-img-overlay-top card-img-overlay-right text-center rounded-circle card-img-overlay-square">
+                      {% price availability.discount display_gross=site.settings.include_taxes_in_prices %}
+                    </h5>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="{{ product.get_absolute_url }}" class="link--clean">
+                {{ product.translated }}
+              </a>
+            </h4>
+            <h4 class="color-green a-mb-2">{% price_range availability.price_range %}</h4>
+            <a href="{{ product.get_absolute_url }}" class="btn btn-primary a-shadow-4 a-shadow-hover-8 --o--transition">
+              Beli
+            </a>
+          </div>
+        </div>
+        <div class="panel-footer">
+          {% if availability.available %}
+            {% if availability.on_sale %}
+              {% if availability.price_range_undiscounted.start != availability.price_range.start %}
+                <div class="product-list__sale">
+                <div class="isvg loaded">
+                  <svg data-src="{% static "images/sale-bg.svg" %}" />
+                  </div>
+                  <span class="product-list__sale__text">
+                    {% comment %}Translators: Layout may break if character length is different than four.{% endcomment %}
+                    {% trans "Sale" context "Sale (discount) label for item in product list" %}
+                  </span>
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}

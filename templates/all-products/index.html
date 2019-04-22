@@ -1,0 +1,18 @@
+{% extends "product/product_list_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+  Products
+{% endblock %}
+
+{% block breadcrumb_part %}
+  <li class="breadcrumb-item">
+    <a href="{% url 'home' %}">{% trans "Home" context 'Site breadcrumbs home' %}</a>
+  </li>
+  <li class="breadcrumb-item"><a href='/'>Produk</a></li>
+{% endblock %}
+
+{% block filters %}
+  {% include "product/_filters.html" %}
+{% endblock filters %}

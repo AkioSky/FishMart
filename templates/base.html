@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+{% load placeholder %}
+
+<html lang="{{ LANGUAGE_CODE }}" class="no-js" data-shipping-options-url="{% url 'cart:shipping-options' %}" data-cart-summary-url="{% url 'cart:summary' %}">
+<head>
+  <title>{% block title %}{{ site.name }}{% endblock %}</title>
+  {% block meta %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Saleor">
+    <meta name="theme-color" content="#333333">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="{{ site.name }}">
+    <meta name="og:type" content="website">
+  {% endblock meta %}
+
+  {% include 'favicon.html' %}
+
+  {% block stylesheet %}{% endblock stylesheet %}
+
+  {% block meta_tags %}
+    <meta property="og:title" content="{{ site.settings.translated.header_text }}">
+    <meta property="og:description" content="{{ site.settings.translated.description }}">
+    <meta name="description" content="{{ site.settings.translated.description }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% static "images/block1.png" %}">
+  {% endblock meta_tags %}
+
+  <link rel="manifest" href="{% url "manifest" %}" />
+  <!-- CSS files -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'custom_assets/css/animate.min.css' %}">
+  <link rel="stylesheet" href="{% static 'custom_assets/css/bebas.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'custom_assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'custom_assets/css/superbru.css' %}">
+
+</head>
+
+<body class="pace-on pace-double-spinner">
+<div class="pace-overlay"></div>
+{% block header %}
+  <div class="a-header a-nav-shadow-style-2">
+    <!-- Top Bar -->
+    <div class="a-topbar a-topbar-leftright">
+      <div class="a-topbar-inner">
+        <div class="a-topbar-container">
+          <div class="a-topbar-col">
+            <div class="a-widget widget_text">
+              <i class="fa fa-phone"></i> &nbsp;0811-899-2001
+            </div>
+          </div>
+          <div class="a-topbar-col">
+            <div class="a-widget widget_social">
+              <div class="a-icon-set">
+                <a class="a-icon-set-item a-transition" href="#">
+                  <i class="fa fa-instagram"></i>
+                </a>
+                <a class="a-icon-set-item a-transition" href="#">
+                  <i class="fa fa-facebook"></i>
+                </a>
+                <a class="a-icon-set-item a-transition" href="#">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="a-nav a-nav-sticky a-nav-layout-logo-l-menu-r">
+      <div class="a-nav-inner">
+        <div class="a-nav-container">
+          <!-- Logo -->
+          <div class="a-nav-brand">
+            <a href="{% url 'home' %}">
+              <img src="{% static 'custom_assets/images/fishMart.idWarna.png' %}"/>
+            </a>
+          </div>
+          <!-- Mobile menu toggle button -->
+
+          <!-- Menu One -->
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="false" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon" style="display: inline-block; direction: rtl;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav a-nav-list">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'product:list' %}">Produk</a>
+                </li>
+                {% if user.is_authenticated %}
+                  {% if user.is_industry %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'request-order:home' %}">Request Order</a>
+                    </li>
+                  {% endif %}
+                  <li class="nav-item dropdown">
+                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" id="navbarDropdown" aria-haspopup="true" aria-expanded="false" role="button">Profilku</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{% url 'account:details' %}">Pengaturan Akun</a>
+                      <a class="dropdown-item" href="{% url 'account:logout' %}">Keluar</a>
+                    </div>
+                  </li>
+                {% else %}
+                  <li class="nav-item">
+                    <a href="" class="trigger-btn nav-link signup-btn" data-toggle="modal" style="margin-top: 0px;">Daftar</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="" class="trigger-btn nav-link login-btn" data-toggle="modal" style="margin-top: 0px;">Masuk</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </div>
+            <div class="a-nav-widget">
+              <div class="a-widget">
+                <div class="a-widget widget_cart">
+                  <a href="{% url 'cart:index' %}">
+                    <i class="fa fa-shopping-cart align-middle"></i>
+                    <span class="badge badge-primary rounded-circle d-inline-block align-top">
+                      {% if cart_counter %}
+                        {{ cart_counter }}
+                      {% else %}
+                        0
+                      {% endif %}
+                    </span>
+                  </a>
+                  <div class="cart-dropdown d-none">
+                    {% include 'cart_dropdown.html' %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+<div>
+  {% block topcontent %}{% endblock topcontent %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% block subtitle %}
+  {% endblock subtitle %}
+  {% block content %}
+  {% endblock content %}
+</div>
+{% block footer %}
+  <footer class="a-footer">
+    <div class="section a-py-9">
+      <div class="section-content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="a-widget widget_text">
+                <h4 class="a-widget-header text-uppercase">Tentang Kami</h4>
+                <p>Fish Mart.id adalah sebuah E commercial yang berfokus menjual ikan dan hewan laut
+                  lainnya.</p>
+                <p>Sistem penjualan kami di laksanakan secara digital dan aman.</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="a-widget widget_text">
+                <h4 class="a-widget-header text-uppercase">Alamat Dan Kontak Kami</h4>
+                <p>Plaza Kuningan Menara Selatan Lantai 11, Jalan HR Rasuna Said Kav c11-14, Setiabudi,
+                  Jakarta Selatan</p>
+                <p> Telp: 0811-899-2001</p>
+                <p>E-mail : fajar@dayagagas.id </p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="a-widget widget_text">
+                <h4 class="a-widget-header">Pembayaran</h4>
+                <p>kami menerima pembayaran via bank, E banking dan virtual akun.</p>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fa fa-cc-amex"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fa fa-paypal"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fa fa-bank"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fa fa-cc-mastercard"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fa fa-google-wallet"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fa fa-credit-card"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section a-py-1">
+      <div class="section-content">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6 text-sm-left">
+              <div class="a-widget widget_text">
+                <p>
+                  DGI. © Fish Mart.id 2019
+                </p>
+              </div>
+            </div>
+            <div class="col-sm-6 text-sm-right">
+              <div class="a-widget widget_social">
+                <div class="a-icon-set">
+                  <a class="a-icon-set-item a-transition" href="#">
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                  <a class="a-icon-set-item a-transition" href="#">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                  <a class="a-icon-set-item a-transition" href="#">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                  <a class="a-icon-set-item a-transition" href="#">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <div class="modal fade seminor-login-modal" data-backdrop="static" id="sem-login2">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-signup" id="modal-sign-up">
+        <!-- Modal body -->
+      </div>
+    </div>
+  </div>
+  <div class="modal fade seminor-login-modal" data-backdrop="static" id="sem-login">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-login">
+
+      </div>
+    </div>
+  </div>
+  <a href="#" class="a-go-top a-shadow-10 a-shadow-hover-15 d-none d-sm-block hide">
+    <i class="fa fa-angle-up"></i>
+  </a>
+{% endblock %}
+{% block footer_scripts %}
+  <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <script src="{% static 'custom_assets/js/magnific.min.js' %}"></script>
+  <script src="{% static 'custom_assets/js/pace.min.js' %}"></script>
+  <script src="{% static 'custom_assets/js/smooth-scroll.min.js' %}"></script>
+  <script src="{% static 'custom_assets/js/waypoints.min.js' %}"></script>
+  <script src="{% static 'custom_assets/js/prlx.min.js' %}"></script>
+  <script src="{% static 'custom_assets/js/countdown.min.js' %}"></script>
+  <script src="{% static 'custom_assets/js/bebas.js' %}"></script>
+  <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
+  <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+  {% if not user.is_authenticated %}
+    <script src="{% static 'custom_assets/js/bootstrap.js' %}"></script>
+  {% endif %}
+  {% render_bundle 'storefront' 'js' %}
+  <script type="text/javascript">
+  $(function () {
+    $(".signup-btn").modalForm({
+      formURL: "{% url 'account:ajax-signup' %}",
+      modalID: '#sem-login2',
+      modalContent: '.modal-content-signup'
+    });
+    $(".login-btn").modalForm({
+      formURL: "{% url 'account:ajax-login' %}",
+      modalID: '#sem-login',
+      modalContent: '.modal-content-login'
+    });
+  })
+  </script>
+{% endblock footer_scripts %}
+{% block footer_custom_scripts %}
+
+{% endblock %}
+</body>
+</html>

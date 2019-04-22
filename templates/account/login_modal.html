@@ -1,0 +1,47 @@
+{% load widget_tweaks %}
+
+<div class="seminor-login-form">
+  <form method="post" action="">
+    {% csrf_token %}
+    <div class="modal-body seminor-login-modal-body">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+      </button>
+      <h5 class="modal-title text-center">Masuk Akun</h5>
+      <div class="{% if form.non_field_errors %} invalid card bg-warning {% endif %} mb-4 mb-3">
+        {% for error in form.non_field_errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+      {% for field in form %}
+        <div class="form-group{% if field.errors %} invalid{% endif %}">
+          {% render_field field class="form-control" %}
+          <label class="form-control-placeholder" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {% for error in field.errors %}
+            <p class="help-block text-danger">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <input type="hidden" name="next" value="{{ success_url }}">
+      <div class="btn-check-log">
+        <button type="submit" class="submit-btn btn-check-login">Masuk</button>
+      </div>
+    </div>
+  </form>
+  <div class="forgot-pass-fau text-center pt-3">
+    <a href="{% url 'account:reset-password' %}" class="text-secondary">Lupa Kata Sandi?</a>
+  </div>
+  <div class="create-new-fau text-center pt-3">
+    <a href="" class="text-primary-fau" id="sign-up-modal" data-toggle="modal" data-dismiss="modal">Buat Akun Baru</a>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $("#sign-up-modal").modalForm({
+      formURL: "{% url 'account:ajax-signup' %}",
+      modalID: '#sem-login2',
+      modalContent: '.modal-content-signup'
+    });
+  })
+</script>

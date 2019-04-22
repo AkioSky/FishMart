@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load bootstrap_form from bootstrap4 %}
+{% load static %}
+{% load i18n %}
+
+{% block meta_tags %}
+  <meta name="robots" content="nofollow">
+{% endblock meta_tags %}
+
+<div class="a-content">
+  {% block subtitle %}
+    <div class="section a-demo-bg-color-red">
+      <div class="section-content">
+        <div class="container">
+          <div class="row a-py-6">
+            <h1 class="a-text-light a-mb-0">Request Order</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+{% block content %}
+  <div class="col-lg-10 col-sm-12 m-auto">
+    <div class="row login mt-5 mb-5 ">
+      <div class="col-md-6 login__form">
+        <form method="post" action="{% url 'request-order:home' %}">
+          <fieldset>
+            <h3>Formulir request</h3>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% if REDIRECT_FIELD_VALUE %}
+              <input type="hidden" name="{{ REDIRECT_FIELD_NAME }}" value="{{ REDIRECT_FIELD_VALUE }}"/>
+            {% endif %}
+          </fieldset>
+          <button type="submit" class="btn btn-primary narrow">Kirim</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+</div>

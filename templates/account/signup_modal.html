@@ -1,0 +1,35 @@
+{% load widget_tweaks %}
+
+<form method="post" action="" class="seminor-login-form">
+  <div class="modal-body seminor-login-modal-body">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+    </button>
+    <h5 class="modal-title text-center">Daftar Baru</h5>
+    {% csrf_token %}
+    <div class="{% if form.non_field_errors %} invalid card bg-warning {% endif %} mt-3 mb-4">
+      {% for error in form.non_field_errors %}
+        {{ error }}
+      {% endfor %}
+    </div>
+    {% for field in form %}
+      <div class="form-group{% if field.errors %} invalid{% endif %}">
+        {% if field.label == 'Gender' or field.label == 'User type' %}
+          {% for choice in field %}
+            {{ choice }}
+          {% endfor %}
+        {% else %}
+          {{ field }}
+          <label class="form-control-placeholder" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {% endif %}
+        {% for error in field.errors %}
+          <p class="help-block text-danger">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button type="submit" class="submit-btn btn btn-primary">Create</button>
+    </div>
+  </div>
+</form>

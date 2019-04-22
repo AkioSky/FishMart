@@ -1,0 +1,84 @@
+.pace-on {
+  .pace-overlay {
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: opacity .5s 0s, height 0s .5s;
+    -moz-transition: opacity .5s 0s, height 0s .5s;
+    -ms-transition: opacity .5s 0s, height 0s .5s;
+    -o-transition: opacity .5s 0s, height 0s .5s;
+    transition: opacity .5s 0s, height 0s .5s;
+    background-color: hsla(0, 0%, 100%, .95);
+  }
+  +.pace-running {
+    overflow: hidden;
+  }
+}
+
+.pace-double-spinner {
+  .pace-progress {
+    width: 56px;
+    height: 56px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate3d(-50%, -50%, 0)!important;
+    -moz-transform: translate3d(-50%, -50%, 0)!important;
+    -ms-transform: translate3d(-50%, -50%, 0)!important;
+    -o-transform: translate3d(-50%, -50%, 0)!important;
+    transform: translate3d(-50%, -50%, 0)!important;
+  }
+  .pace-progress-inner {
+    width: 56px;
+    height: 56px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 4px solid transparent;
+    border-top-color: rgba(247, 84, 69, .7);
+    border-bottom-color: rgba(247, 84, 69, .7);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-animation: pace-double-spinner 1s linear infinite;
+    -o-animation: pace-double-spinner 1s linear infinite;
+    animation: pace-double-spinner 1s linear infinite;
+  }
+}
+
+@-webkit-keyframes pace-double-spinner {
+  0% {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    -moz-transform: rotate(1turn);
+    -ms-transform: rotate(1turn);
+    -o-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes pace-double-spinner {
+  0% {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    -moz-transform: rotate(1turn);
+    -ms-transform: rotate(1turn);
+    -o-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}

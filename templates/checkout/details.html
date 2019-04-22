@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load price from taxed_prices %}
+{% load static %}
+
+{% block title %}{% trans "Checkout" context "Checkout page title" %} — {{ block.super }}{% endblock %}
+
+<div class="a-content">
+{% block subtitle %}
+  <div class="section a-demo-bg-color-red">
+    <div class="section-content">
+      <div class="container">
+        <div class="row a-py-6">
+          <h1 class="a-text-light a-mb-0">Metode Pembayaran</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block content %}
+  <div class="section">
+    <div class="section-background">
+      <div class="section-bg-image section-bg-image-size-100 section-bg-image-position-bottom a-demo-bg-image-07"></div>
+    </div>
+    <div class="section-content">
+      <div class="row checkout mr-auto">
+        <div class="col-md-7 p-5">
+          {% block forms %}{% endblock %}
+        </div>
+        <div class="col-md-5 p-5">
+          <div class="checkout__review">
+            <h3 class="checkout__review__tittle">{% trans "Order review" context "Order review title" %}</h3>
+            <table class="table bordered table-hover a-shadow-12 a-shadow-hover-16 a-transition">
+            <thead>
+            <tr>
+              <th class="text-center">Produk</th>
+              <th class="text-center">Total</th>
+            </tr>
+            </thead>
+              {% for line, line_total in cart_lines %}
+                <tr>
+                <td><strong>{{ line.variant.product.translated }}</strong> x {{ line.quantity }}</td>
+                <td>{% price line_total %}</td>
+                </tr>
+              {% endfor %}
+            <tr>
+              <td>Subtotal</td>
+              <td>{% price cart_subtotal %}</td>
+            </tr>
+            <tr>
+              <td>Shipment</td>
+              <td>{% if cart.shipping_method %}
+                    {% price cart_shipping_price %}
+                  {% else %}
+                    &mdash;
+                  {% endif %}
+              </td>
+            </tr>
+            {% if cart_are_taxes_handled %}
+              <tr>
+                <td>
+                {% if site.settings.display_gross_prices %}
+                  {% trans "Taxes (included)" context "Order review section title" %}
+                {% else %}
+                  {% trans "Taxes" context "Order review section title" %}
+                {% endif %}
+                </td>
+                <td>
+                  {% price cart_total.tax %}
+                </td>
+              </tr>
+            {% endif %}
+            <tr>
+              <td>{% trans "Total" context "Order review section title" %}</td>
+              <td>{% price cart_total.gross %}</td>
+            </tr>
+            </table>
+            {% if false %}
+              <div class="row checkout__review__section">
+                <div class="col-12">
+                  <h3>{% trans "Promo code" context "Order review section title" %}</h3>
+                  {% include "checkout/snippets/voucher_form.html" with checkout=checkout form=voucher_form %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+</div>

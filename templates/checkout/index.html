@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load get_product_image_thumbnail from product_images %}
+{% load price from taxed_prices %}
+{% load static %}
+
+{% block title %}{% trans "Your cart" context "Cart page title" %} — {{ block.super }}{% endblock %}
+
+{% block meta_tags %}
+  <meta name="robots" content="nofollow">
+{% endblock meta_tags %}
+
+{% block subtitle %}
+  <div class="section a-demo-bg-color-red">
+    <div class="section-content">
+      <div class="container">
+        <div class="row a-py-6">
+          <h1 class="a-text-light a-mb-0">Selamat Berbelanja</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="section">
+    <div class="section-background">
+      <div class="section-bg-image section-bg-image-size-100 section-bg-image-position-bottom a-demo-bg-image-07"></div>
+    </div>
+    <div class="section-content">
+      <div class="alert alert-success remove-product-alert d-none">
+        {% trans "Product has been removed from cart" context "Cart message" %}
+        <button type="button" class="close close-msg" aria-hidden="true">&times;</button>
+      </div>
+
+      <div class="container">
+        <div class="row a-pt-6 a-pb-12">
+          {% if cart_lines %}
+            <table class="table a-mb-3 bordered table-hover a-shadow-12 a-shadow-hover-16 a-transition">
+              <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th class="text-center">Produk</th>
+                <th class="text-center">Harga</th>
+                <th class="text-center">Jumlah</th>
+                <th class="text-center">Total</th>
+              </tr>
+              </thead>
+            <tbody>
+            {% for line in cart_lines %}
+              <tr class="align-middle cart__line">
+                <td class="align-middle">
+                  <span class="cart-item-delete"><i class="fa fa-times" aria-hidden="true"></i></span>
+                </td>
+                <td class="align-middle">
+                  <a class="link--clean" href="{{ line.variant.get_absolute_url }}">
+                    <img class="lazyload lazypreload" data-src="{% get_product_image_thumbnail line.variant.get_first_image method="thumbnail" size=60 %}"
+                         data-srcset="{% get_product_image_thumbnail line.variant.get_first_image method="thumbnail" size=60 %} 1x, {% get_product_image_thumbnail line.variant.get_first_image method="thumbnail" size=120 %} 2x"
+                         alt="">
+                  </a>
+                </td>
+                <td class="align-middle text-center">
+                  <a class="link--clean" href="{{ line.variant.get_absolute_url }}">
+                    <p>{{ line.variant.product.translated }}<br><small>{{ line.variant.translated }}</small></p>
+                  </a>
+                </td>
+                <td class="align-middle text-center">
+                  {% price line.variant.product.price %}
+                </td>
+                <td class="align-middle text-center">
+                  <form role="form" action="{% url "cart:update-line" variant_id=line.variant.pk %}" method="post" class="form-cart">
+                    <div class="{% if form.quantity.errors %} has-error{% endif %}" tabindex="-1">
+                      {{ line.form.quantity }}
+                    </div>
+                    {% csrf_token %}
+                  </form>
+                  <small class="cart__line__quantity-error text-danger"></small>
+                </td>
+                <td class="align-middle text-center cart-item-price" data-product-id="{{ line.variant.pk }}">
+                  <p>
+                    {% price line.get_total %}
+                  </p>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+            <div class="col-lg-12">
+              {% include 'checkout/_subtotal_table.html' %}
+            </div>
+            <div class="col-lg-12">
+              <div class="col-md-4 ml-auto">
+                <a href="{% url "checkout:login" %}" class="btn btn-secondary rounded-0 a-shadow-4 a-shadow-hover-8 a-transition float-right cart__submit">
+                  Proses Pembayaran
+                  <i class="fa fa-shopping-cart"></i>
+                </a>
+                <button class="btn secondary float-right cart__clear" data-action="{% url 'cart:clear-cart' %}">
+                  {% trans "Clear cart" context "cart page: secondary action, empty the cart" %}
+                </button>
+              </div>
+            </div>
+          {% else %}
+            <div class="cart__empty">
+              <img class="lazyload lazypreload" data-src="{% static 'images/empty-cart-bg.png' %}" data-srcset="{% static 'images/empty-cart-bg.png' %} 1x, {% static 'images/empty-cart-bg2x.png' %} 2x">
+              <h2>{% trans "There are no products in your shopping cart." context "Empty cart message" %}</h2>
+              <a href="{% url 'product:list' %}" class="btn btn-primary">{% trans "Check out our sales" context "Empty cart link" %}</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

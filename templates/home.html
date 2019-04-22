@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  <div class="a-content">
+    <img src="{% static 'custom_assets/images/h4.jpg' %}" alt="Product Image" class="mw-100 a-mb-3 a-os-animation" data-os-animation="fadeInUp"
+         data-os-animation-delay=".3s">
+    <div class="section">
+      <div class="section-content">
+        <div class="container">
+          <div class="row justify-content-end">
+            <div class="col-xs-12 col-md-6 col-lg-5 col-xl-5">
+              <div class="card card-hero card-inverse a-shadow-15 a-shadow-hover-20 a-transition a-os-animation text-center animated fadeInUp"
+                   data-os-animation="fadeIn" data-os-animation-delay=".5s" style="animation-delay: 0.3s;margin-top: -290px;">
+                <div class="card-body">
+                  <h2 class="a-mb-2">
+                    Fishmart.id adalah e-commerce penjualan ikan segar dan hasil olahan ikan yg
+                    menghubungkan ikan hasil tangkapan nelayan dengan industri pengolahan ikan
+                    dan rumah tangga/masyarakat konsumen ikan di kota besar
+                  </h2>
+                  {% if not user.is_authenticated %}
+                  <button type="button"
+                          class="signup-btn btn btn-secondary btn-lg a-shadow-8 a-shadow-hover-16 a-transition"
+                          data-toggle="modal" data-target="#sem-login2">
+                    Daftar Sekrang
+                  </button>
+                  {% endif %}
+                </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-background">
+        <div class="section-bg-image section-bg-image-size-100 section-bg-image-position-bottom a-demo-bg-image-01"></div>
+      </div>
+    </div>
+    <div class="section a-demo-bg-color-green">
+      <div class="section-background">
+        <div class="section-bg-image section-bg-image-size-100 section-bg-image-position-bottom a-demo-bg-image-02"></div>
+      </div>
+      <div class="section-content">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-7 a-order-lg-2">
+              <img src="{% static 'custom_assets/images/kepiting.png' %}" alt="Product Image" class="mw-100  a-os-animation"
+                   data-os-animation="fadeInUp" data-os-animation-delay=".3s">
+            </div>
+            <div class="col-lg-5 a-text-light text-center">
+              <h2 class="h1 card-title a-mb-3 a-mt-3  a-os-animation" data-os-animation-delay=".3s">Kepiting</h2>
+              <p class="lead a-mb-3  a-os-animation" data-os-animation-delay=".4s">
+                di Fish Mart.id jual kepiting juga loh, ayo buruan beli sebelum kehabisan!!
+              </p>
+              <a href="{% url 'product:list' %}" class="btn btn-primary btn-lg a-shadow-8 a-shadow-hover-16 a-transition a-mb-3  a-os-animation"
+                 data-os-animation-delay=".5s">Beli</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-background">
+        <div class="section-bg-image section-bg-image-size-100 section-bg-image-position-bottom a-demo-bg-image-03"></div>
+      </div>
+      {% if products %}
+      <div class="section-content">
+        <div class="container">
+          <div class="row a-pt-12">
+            <div class="col-12 text-center">
+              <h3 class="a-mb-6 a-os-animation" data-os-animation="fadeIn" data-os-animation-delay=".2s">Rekomendasi
+                Produk</h3>
+            </div>
+            {% include "product/_items.html" %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    <div class="section a-demo-bg-color-green">
+      <div class="section-background">
+        <div class="section-bg-image section-bg-image-size-100 section-bg-image-position-bottom a-demo-bg-image-04"></div>
+      </div>
+      <div class="section-content">
+        <div class="container">
+          <div class="row align-items-center a-pt-12">
+            <div class="col-lg-5 a-text-light a-order-lg-2 text-center text-lg-left">
+              <h2 class="h1 card-title a-mb-3 a-mt-3  a-os-animation" data-os-animation-delay=".3s">Kenapa
+                Beli DI Fish Mart.id ?</h2>
+              <p class="lead a-mb-3  a-os-animation" data-os-animation-delay=".4s">
+                Fish Mart.id adalah sebuah E commercial yang berfokus menjual ikan dan hewan laut lainnya.
+              </p>
+            </div>
+            <div class="col-lg-7">
+              <div class="card card-hero a-shadow-15 a-shadow-hover-20 a-transition a-os-animation"
+                   data-os-animation="fadeIn" data-os-animation-delay=".3s">
+                <div class="card-body">
+                  <div class="media a-mb-4">
+                    <img class="d-flex a-mr-2" src="{% static 'custom_assets/icon/logistics-delivery-truck-in-movement.png' %}"
+                         alt="Service image">
+                    <div class="media-body">
+                      <h3 class="a-mt-0 a-mb-1 color-green">Cepat</h3>
+                      <p>Pelayanan pengiriman cepat.</p>
+                    </div>
+                  </div>
+                  <div class="media a-mb-4">
+                    <img class="d-flex a-mr-2" src="{% static 'custom_assets/icon/money-back.png' %}" alt="Service image">
+                    <div class="media-body">
+                      <h3 class="a-mt-0 a-mb-1 color-green">Jaminan</h3>
+                      <p>Jaminan uang Kembali jika produk tidak sesuai.</p>
+                    </div>
+                  </div>
+                  <div class="media">
+                    <img class="d-flex a-mr-2" src="{% static 'custom_assets/icon/shield(1).png' %}" alt="Service image">
+                    <div class="media-body">
+                      <h3 class="a-mt-0 a-mb-1 color-green">Aman</h3>
+                      <p>100% Belanja di Fish Mart.id aman.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
