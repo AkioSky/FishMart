@@ -8749,10 +8749,10 @@ lazy-universal-dotenv@^2.0.0:
     dotenv "^6.0.0"
     dotenv-expand "^4.2.0"
 
-lazysizes@^4.0.1:
-  version "4.1.6"
-  resolved "https://registry.yarnpkg.com/lazysizes/-/lazysizes-4.1.6.tgz#a8b1e0cc6b6cf3ddc0a0e7c44768aeed27ca343a"
-  integrity sha512-tbW91sxEwTIBp0n6YiWE+/O4uFe2w4X66YG2rm6dVf4wsa1hJkrp34FD1XjynU+9BeKP/o9/VZlj+bls0G1cCg==
+lazysizes@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/lazysizes/-/lazysizes-5.2.1.tgz#f450e36a995efb5817acb8c904f3d2f2efc29ffa"
+  integrity sha512-607dEMlbcnkny2lGYVqoA/rQO+WGpWh/BISeS1eLfT8nHQw6E+R8ybJoKKGVlZ2czKPTATrsU95f+nkwix0fXw==
 
 lcid@^1.0.0:
   version "1.0.0"
@@ -10627,11 +10627,6 @@ p-try@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.0.0.tgz#85080bb87c64688fa47996fe8f7dfbe8211760b1"
   integrity sha512-hMp0onDKIajHfIkdRk3P4CdCmErkYAxxDtP3Wx/4nZ3aGlau2VKh3mZpcuFkH27WQkL/3WBCPOktzA9ZOAnMQQ==
-
-pace-progress@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/pace-progress/-/pace-progress-1.0.2.tgz#fdc565c57dd91725a3167b360bf2578d3c3b548d"
-  integrity sha1-/cVlxX3ZFyWjFns2C/JXjTw7VI0=
 
 pako@~1.0.5:
   version "1.0.8"
@@ -14157,11 +14152,6 @@ watchpack@^1.5.0:
     chokidar "^2.0.2"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-
-waypoints@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/waypoints/-/waypoints-4.0.1.tgz#09979a0573810b29627cba4366a284a062ec69c8"
-  integrity sha1-CZeaBXOBCylifLpDZqKEoGLsacg=
 
 wcwidth@^1.0.1:
   version "1.0.1"
